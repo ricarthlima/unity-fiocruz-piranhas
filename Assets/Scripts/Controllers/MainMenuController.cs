@@ -7,7 +7,7 @@ public class MainMenuController : MonoBehaviour
     private GameController gameContoller;
 
     [SerializeField]
-    private GameObject gameControllerObject, canvasMainMenu, soundControllerButton;
+    private GameObject gameControllerObject, backgroundControllerObject, canvasMainMenu, soundControllerButton;
 
     private void Start()
     {
@@ -23,6 +23,10 @@ public class MainMenuController : MonoBehaviour
     {
         canvasMainMenu.SetActive(false);
         this.gameContoller.isGameStarted = true;
+
+        BackgroundController backgroundController = this.backgroundControllerObject.GetComponent<BackgroundController>();
+        backgroundController.gameStarted();
+
         EnableSoundController();
     }
 

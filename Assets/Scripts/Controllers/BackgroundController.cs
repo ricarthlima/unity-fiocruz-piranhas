@@ -11,8 +11,7 @@ public class BackgroundController : MonoBehaviour
     [SerializeField]
     private List<GameObject> listWaterObjects;
 
-    [SerializeField]
-    private List<GameObject> listTreeObjects;
+    private float newZ = 0;
 
     private void Start()
     {
@@ -30,57 +29,47 @@ public class BackgroundController : MonoBehaviour
         piranhaSwiming.transform.localScale = new Vector3(-0.25f, 0.25f, 1f);
         piranhaSwiming.transform.localPosition = new Vector3(-9.5f, -3f, 0);
         piranhaSwiming.animation.Play("swimming");
+
+        MakeTree();
     }
 
     // Update is called once per frame
     private void Update()
     {
         MovePiranha();
-    }
-
-    private void FixedUpdate()
-    {
         MoveWater();
-        //MoveTree();
     }
 
-    private void MoveTree()
+    private void MakeTree()
     {
-        for (int i = 0; i < listTreeObjects.Count; i++)
+        this.newZ += 0.0001f;
+        int factor = 1;
+
+        for (int i = 0; i < 2; i++)
         {
-            GameObject tree = listTreeObjects[i];
+            UnityArmatureComponent tree = UnityFactory.factory.BuildArmatureComponent("Tree");
 
-            //Scale
-            Vector3 scale = tree.transform.localScale;
-            float gain = 0.04f * Time.deltaTime;
-            tree.transform.localScale += new Vector3(scale.x * gain, scale.y * gain, scale.z * Time.deltaTime);
+            tree.transform.position = new Vector3(3.5f * factor, 1.65f, newZ);
+            tree.transform.localScale = new Vector3(1f * factor, 1f, 1f);
 
-            //Move X
-            float gainPosX = 0.3f * Time.deltaTime;
-            if (i % 2 == 0)
-            {
-                gainPosX = gainPosX * -1;
-            }
-            tree.transform.localPosition += transform.right * gainPosX;
-
-            //Move Y
-            float gainPosY = 0.3f * Time.deltaTime;
-            tree.transform.localPosition += -transform.up * gainPosY;
-
-            //To reset
-            if (i % 2 == 0)
-            {
-            }
-            else
-            {
-                if (tree.transform.position.x >= 10 || tree.transform.position.x <= 2.2 || scale.x >= 1.3)
-                {
-                    tree.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                    tree.transform.position = new Vector3(5f, 1f, 13.79f);
-                    tree.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                }
-            }
+            tree.animation.Play("movingTree");
+            tree.name = "Tree" + newZ.ToString();
+            StartCoroutine("DestroyTree", tree);
+            factor = -1;
         }
+
+        Invoke("MakeTree", 1.5f);
+    }
+
+    public void gameStarted()
+    {
+        piranhaSwiming.gameObject.SetActive(false);
+    }
+
+    private IEnumerator DestroyTree(UnityArmatureComponent tree)
+    {
+        yield return new WaitForSeconds(11.5f);
+        Destroy(tree.gameObject);
     }
 
     private void MoveWater()
