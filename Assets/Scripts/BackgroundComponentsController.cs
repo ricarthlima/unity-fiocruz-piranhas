@@ -10,7 +10,7 @@ public class BackgroundComponentsController : MonoBehaviour
 
     private void Start()
     {
-        float baseX = -10f;
+        float baseX = -5.5f;
         float baseY = -4.5f;
         float baseZ = 0f;
 
@@ -41,6 +41,16 @@ public class BackgroundComponentsController : MonoBehaviour
             comp.animation.Play("idle");
             baseCount += 0.05f;
         }
+
+        var piranha = UnityFactory.factory.BuildArmatureComponent("Piranha");
+        piranha.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        piranha.transform.localPosition = new Vector3(7.1f, -3.7f, 0);
+        piranha.animation.Play("swimming");
+
+        var piranha2 = UnityFactory.factory.BuildArmatureComponent("Piranha");
+        piranha2.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        piranha2.transform.localPosition = new Vector3(3.04f, -1.31f, 0);
+        piranha2.animation.Play("bite");
     }
 
     // Update is called once per frame
