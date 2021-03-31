@@ -6,9 +6,11 @@ public class MainMenuController : MonoBehaviour
 {
     private GameController gameContoller;
 
+    [SerializeField]
+    private GameObject gameControllerObject, canvasMainMenu, soundControllerButton;
+
     private void Start()
     {
-        GameObject gameControllerObject = GameObject.Find("GameControllerObject");
         this.gameContoller = gameControllerObject.GetComponent<GameController>();
     }
 
@@ -17,9 +19,26 @@ public class MainMenuController : MonoBehaviour
     {
     }
 
-    public void btnStartPressed()
+    public void BtnStartPressed()
     {
-        gameObject.SetActive(false);
+        canvasMainMenu.SetActive(false);
         this.gameContoller.isGameStarted = true;
+        EnableSoundController();
+    }
+
+    public void BtnShowRecordsPressed()
+    {
+        EnableSoundController();
+    }
+
+    private void EnableSoundController()
+    {
+        this.soundControllerButton.SetActive(true);
+        Invoke("DesableSoundController", 0.7f);
+    }
+
+    private void DesableSoundController()
+    {
+        this.soundControllerButton.SetActive(false);
     }
 }
