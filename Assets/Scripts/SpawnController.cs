@@ -29,7 +29,7 @@ public class SpawnController : MonoBehaviour
 
     public void StartSpawn()
     {
-        InvokeRepeating("SpawnPiranha", getInterval(), getInterval());
+        SpawnPiranha();
     }
 
     public void StopSpawn()
@@ -44,7 +44,7 @@ public class SpawnController : MonoBehaviour
 
     private float getInterval()
     {
-        float timeToSpawn = 3f;
+        float timeToSpawn;
 
         if (gameController.level < 6)
         {
@@ -52,11 +52,11 @@ public class SpawnController : MonoBehaviour
         }
         else if (gameController.level < 11)
         {
-            timeToSpawn = Random.Range(1, 3);
+            timeToSpawn = Random.Range(1f, 3);
         }
         else
         {
-            timeToSpawn = Random.Range(0.5f, 1.5f);
+            timeToSpawn = Random.Range(0.3f, 1.5f);
         }
 
         return timeToSpawn;
@@ -68,9 +68,14 @@ public class SpawnController : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             GameObject instance = Instantiate(piranhaPrefab);
-            instance.transform.position = new Vector3(Random.Range(12, 15) * scaler, Random.Range(-2f, -10f), 0f);
+            instance.transform.position = new Vector3(Random.Range(10.5f, 13) * scaler, Random.Range(-2f, -10f), 0f);
             instance.transform.SetParent(transform);
             scaler = -1;
+        }
+
+        if (this.gameController.isGameStarted)
+        {
+            Invoke("SpawnPiranha", getInterval());
         }
     }
 }

@@ -2162,7 +2162,7 @@ MonoBehaviour:
   canvaInGame: {fileID: 613582662}
   playerLifes: 3
   points: 0
-  level: 0
+  level: 1
   txtScore: {fileID: 688540981}
   listLifesSprites:
   - {fileID: 21300000, guid: 4c1aa67771f50e64ca18423a7a647e13, type: 3}

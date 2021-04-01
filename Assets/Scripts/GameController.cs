@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     public int playerLifes = 3;     // Quantidade de vidas disponíveis
 
     public int points = 0;          // Total de pontos obtidos (10 pontos por piranha afastada)
-    public int level = 0;
+    public int level = 1;
 
     [Header("UI Objects")]
     public Text txtScore;
@@ -67,12 +67,15 @@ public class GameController : MonoBehaviour
     public void gameStart()
     {
         this.imgLifesDisplay.sprite = this.listLifesSprites[playerLifes];
+        txtScore.text = points.ToString();
         this.soundController.ActiveButtonClick();
         this.isGameStarted = true;
         canvaMainMenu.SetActive(false);
         canvaInGame.SetActive(true);
         backgroundController.setActivePiranhaSwimming(false);
         this.spawnController.StartSpawn();
+
+        InvokeRepeating("NextLevel", 25f, 25f);
     }
 
     public void ShowRanking()
@@ -124,5 +127,23 @@ public class GameController : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    private void NextLevel()
+    {
+        this.level += 1;
+
+        GameObject[] arrayEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in arrayEnemies)
+        {
+            StartCoroutine("FleePiranhas", enemy);
+        }
+    }
+
+    private IEnumerator FleePiranhas(GameObject enemy)
+    {
+        yield return new WaitForSeconds(0.15f);
+        MakeAPoint(7);
+        Destroy(enemy);
     }
 }

@@ -11,18 +11,18 @@ public class EnemyPiranhaController : MonoBehaviour
 
     private GameObject shipPlayer;
     public float moveSpeed = 0.1f;
-    public float clickTolerance = 1f;
 
     private Vector3 leftDeathPoint = new Vector3(-10f, -2f, 0f);
     private Vector3 rightDeathPoint = new Vector3(10f, -2f, 0f);
 
-    private bool isDying = false;
+    public bool isDying = false;
 
     // Start is called before the first frame update
     private void Start()
     {
         this.shipPlayer = GameObject.Find("PlayerShip");
         this.gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        moveSpeed += (gameController.level / 20f);
     }
 
     // Update is called once per frame
@@ -48,22 +48,10 @@ public class EnemyPiranhaController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1.5f);
         transform.localScale = new Vector3(transform.localScale.x * -1, 0.25f, 0.25f);
         isDying = true;
-        this.gameController.MakeAPoint(10);
-    }
-
-    private bool DidTouchThat(Vector3 touch, Vector3 position)
-    {
-        if (Math.Abs(touch.x - touch.x) <= clickTolerance)
-        {
-            if (Math.Abs(touch.y - touch.y) <= clickTolerance)
-            {
-                return true;
-            }
-        }
-        return false;
+        this.gameController.MakeAPoint(9);
     }
 
     private void FlipMe()
