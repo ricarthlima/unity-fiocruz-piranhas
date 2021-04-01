@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{97924016-be7e-4dd7-bd24-6f97c53ca70a}">
+		<property name="assetPath">
+			<value>zapsplat_catoon_bite_munch_single_003_56565.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.45600000000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7aa1317e-a183-4259-bd10-de52cd229de5}</destination>
+		</relationship>
+	</object>
+</objects>

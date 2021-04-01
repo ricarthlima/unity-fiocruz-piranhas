@@ -15,11 +15,11 @@ MonoBehaviour:
   Path: Assets/Sounds/FMOD/fmod/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637527459839787680
+  lastModified: 637528607033756458
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 794
+    Value: 916
   Exists: 1
 --- !u!114 &-4518001594219692837
 MonoBehaviour:
@@ -36,10 +36,33 @@ MonoBehaviour:
   Path: Assets/Sounds/FMOD/fmod/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637527459839687663
+  lastModified: 637528607033676406
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-2338926820325190506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Scored
+  m_EditorClassIdentifier: 
+  Path: event:/Scored
+  guid: 6e14b019da13b54c81b73dd8fc4a8c0c
+  Banks:
+  - {fileID: -4518001594219692837}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,13 +81,62 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 6667508946844039494}
   - {fileID: 5759271491133721897}
+  - {fileID: -2338926820325190506}
+  - {fileID: 373735232745574923}
+  - {fileID: 5585749187932917271}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4518001594219692837}
   StringsBanks:
   - {fileID: -6175694624404722383}
-  stringsBankWriteTime: 637527459839787680
+  stringsBankWriteTime: 637528607033756458
   cacheVersion: 6
+--- !u!114 &373735232745574923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Bite
+  m_EditorClassIdentifier: 
+  Path: event:/Bite
+  guid: 54c110b01e10c24c986cbd0e6788d843
+  Banks:
+  - {fileID: -4518001594219692837}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &5585749187932917271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GameOver
+  m_EditorClassIdentifier: 
+  Path: event:/GameOver
+  guid: da38d4499836804f939ec9a22120a5b9
+  Banks:
+  - {fileID: -4518001594219692837}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &5759271491133721897
 MonoBehaviour:
   m_ObjectHideFlags: 0
