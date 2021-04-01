@@ -32,6 +32,11 @@ public class SpawnController : MonoBehaviour
         InvokeRepeating("SpawnPiranha", getInterval(), getInterval());
     }
 
+    public void StopSpawn()
+    {
+        CancelInvoke("SpawnPiranha");
+    }
+
     // Update is called once per frame
     private void Update()
     {

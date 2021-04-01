@@ -6,7 +6,7 @@ public class SoundController : MonoBehaviour
 {
     [Header("Sound Objects")]
     [SerializeField]
-    private GameObject soundBGM, soundClickButton;
+    private GameObject soundBGM, soundClickButton, soundScored, soundBite, soundGameOver;
 
     private void Start()
     {
@@ -24,13 +24,21 @@ public class SoundController : MonoBehaviour
 
     public void ActiveButtonClick()
     {
-        soundClickButton.SetActive(true);
-        StartCoroutine("DesableButtonSound");
+        Instantiate(this.soundClickButton);
     }
 
-    private IEnumerator DesableButtonSound()
+    public void PlayScoredSound()
     {
-        yield return new WaitForSeconds(0.7f);
-        this.soundClickButton.SetActive(false);
+        Instantiate(this.soundScored);
+    }
+
+    public void PlayBiteSound()
+    {
+        Instantiate(this.soundBite);
+    }
+
+    public void PlayGameOver()
+    {
+        Instantiate(this.soundGameOver);
     }
 }

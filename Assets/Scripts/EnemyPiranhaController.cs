@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DragonBones;
 using System;
+using UnityEditor.SceneManagement;
 
 public class EnemyPiranhaController : MonoBehaviour
 {
@@ -79,5 +80,19 @@ public class EnemyPiranhaController : MonoBehaviour
 
     private void FixedUpdate()
     {
+    }
+
+    public void HasCollided()
+    {
+        GetComponent<Animator>().SetBool("biting", true);
+        Destroy(GetComponent<BoxCollider2D>());
+        StartCoroutine("Flee");
+    }
+
+    private IEnumerator Flee()
+    {
+        yield return new WaitForSeconds(1.5f);
+        GetComponent<Animator>().SetBool("biting", false);
+        isDying = true;
     }
 }

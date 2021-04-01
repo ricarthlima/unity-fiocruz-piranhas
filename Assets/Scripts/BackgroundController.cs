@@ -61,9 +61,9 @@ public class BackgroundController : MonoBehaviour
         Invoke("MakeTree", 1.5f);
     }
 
-    public void gameStarted()
+    public void setActivePiranhaSwimming(bool value)
     {
-        piranhaSwiming.gameObject.SetActive(false);
+        piranhaSwiming.gameObject.SetActive(value);
     }
 
     private IEnumerator DestroyTree(UnityArmatureComponent tree)

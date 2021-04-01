@@ -36,6 +36,10 @@ public class ShipController : MonoBehaviour
         {
             riverMovementX();
         }
+        else
+        {
+            transform.position = new Vector3(0f, transform.position.y, 0f);
+        }
 
         riverMovementY();
     }
@@ -91,6 +95,15 @@ public class ShipController : MonoBehaviour
                 _isGoingUp = false;
                 _speedInY = SpeedsY.baseSpeed;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<EnemyPiranhaController>().HasCollided();
+            this.gameContoller.TakeADamage();
         }
     }
 }

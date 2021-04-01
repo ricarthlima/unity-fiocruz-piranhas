@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{5e3ec75a-8a8c-459a-9577-0cac3009b29b}">
+		<property name="assetPath">
+			<value>zapsplat_multimedia_game_tone_negative_error_mallet_hit_002_63882.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.98399999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7aa1317e-a183-4259-bd10-de52cd229de5}</destination>
+		</relationship>
+	</object>
+</objects>
