@@ -6,40 +6,51 @@ using System;
 
 public class EnemyPiranhaController : MonoBehaviour
 {
+    private GameController gameController;
+
     private GameObject shipPlayer;
     public float moveSpeed = 0.1f;
     public float clickTolerance = 1f;
+
+    private Vector3 leftDeathPoint = new Vector3(-10f, -2f, 0f);
+    private Vector3 rightDeathPoint = new Vector3(10f, -2f, 0f);
+
+    private bool isDying = false;
 
     // Start is called before the first frame update
     private void Start()
     {
         this.shipPlayer = GameObject.Find("PlayerShip");
+        this.gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        FlipMe();
-        transform.position += (shipPlayer.transform.position - transform.position) * moveSpeed * Time.deltaTime;
-    }
-
-    private void LateUpdate()
-    {
-        if (Input.GetMouseButton(0))
+        if (isDying)
         {
-            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            print("Touch: " + touchPosition.ToString());
-            print("Position: " + transform.position.ToString());
-
-            if (DidTouchThat(touchPosition, transform.position))
+            if (transform.position.x < 0)
             {
+                transform.position += (leftDeathPoint - transform.position) * 4f * Time.deltaTime;
             }
+            else
+            {
+                transform.position += (rightDeathPoint - transform.position) * 4f * Time.deltaTime;
+            }
+        }
+        else
+        {
+            FlipMe();
+            transform.position += (shipPlayer.transform.position - transform.position) * moveSpeed * Time.deltaTime;
         }
     }
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 3f);
+        transform.localScale = new Vector3(transform.localScale.x * -1, 0.25f, 0.25f);
+        isDying = true;
+        this.gameController.MakeAPoint(10);
     }
 
     private bool DidTouchThat(Vector3 touch, Vector3 position)
