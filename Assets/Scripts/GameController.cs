@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
 
     private BackgroundController backgroundController;
     private SoundController soundController;
+    private SpawnController spawnController;
 
     [Header("UI Canvas")]
     [SerializeField]
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour
     {
         this.backgroundController = gameObject.GetComponent<BackgroundController>();
         this.soundController = gameObject.GetComponent<SoundController>();
+        this.spawnController = gameObject.GetComponent<SpawnController>();
     }
 
     // Update is called once per frame
@@ -63,5 +65,6 @@ public class GameController : MonoBehaviour
         this.isGameStarted = true;
         canvaMainMenu.SetActive(false);
         backgroundController.gameStarted();
+        this.spawnController.StartSpawn();
     }
 }

@@ -8,12 +8,15 @@ using UnityEngine;
 //10 ~ -> 0.5 ~ 1.5
 public class SpawnController : MonoBehaviour
 {
+    [Header("Piranha Prefab")]
+    [SerializeField]
+    public GameObject piranhaPrefab;
+
+    [Header("Player Ship to Follow")]
     [SerializeField]
     private GameObject shipPlayer;
 
     private GameController gameController;
-
-    private int count = 0;
 
     private void Awake()
     {
@@ -26,7 +29,7 @@ public class SpawnController : MonoBehaviour
 
     public void StartSpawn()
     {
-        StartCoroutine("SpawnPiranha");
+        InvokeRepeating("SpawnPiranha", getInterval(), getInterval());
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class SpawnController : MonoBehaviour
     {
     }
 
-    private IEnumerator SpawnPiranha()
+    private float getInterval()
     {
         float timeToSpawn = 3f;
 
@@ -51,53 +54,18 @@ public class SpawnController : MonoBehaviour
             timeToSpawn = Random.Range(0.5f, 1.5f);
         }
 
-        yield return new WaitForSeconds(timeToSpawn);
+        return timeToSpawn;
+    }
 
+    private void SpawnPiranha()
+    {
         int scaler = 1;
         for (int i = 0; i < 2; i++)
         {
-            MakePiranha(new PiranhaPosition(Random.Range(12, 15) * scaler, Random.Range(-2f, -10f), 0f));
+            GameObject instance = Instantiate(piranhaPrefab);
+            instance.transform.position = new Vector3(Random.Range(12, 15) * scaler, Random.Range(-2f, -10f), 0f);
+            instance.transform.SetParent(transform);
             scaler = -1;
-        }
-
-        if (gameController.isGameStarted)
-        {
-            StartCoroutine("SpawnPiranha");
-        }
-    }
-
-    private void MakePiranha(PiranhaPosition piranhaPosition)
-    {
-    }
-}
-
-internal class PiranhaPosition
-{
-    public Vector3 startPosition;
-
-    public PiranhaPosition(float x, float y, float z)
-    {
-        this.startPosition = new Vector3(x, y, z);
-    }
-
-    public float getScaleFactor()
-    {
-        if (isFromRight())
-        {
-            return 1;
-        }
-        return -1;
-    }
-
-    public bool isFromRight()
-    {
-        if (startPosition.x >= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }
