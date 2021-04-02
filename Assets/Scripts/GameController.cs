@@ -12,9 +12,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Button btnSoundController;
 
-    [SerializeField]
-    private List<Sprite> listSprite;
-
     private BackgroundController backgroundController;
     private SoundController soundController;
     private SpawnController spawnController;
@@ -28,11 +25,23 @@ public class GameController : MonoBehaviour
     public int points = 0;          // Total de pontos obtidos (10 pontos por piranha afastada)
     public int level = 1;
 
-    [Header("UI Objects")]
+    public int highScore = 0;
+
+    [Header("UI Objects - MainMenu")]
+    public List<Sprite> listSpeakerSprites;
+
+    public Text txtHighScore;
+
+    [Header("UI Objects - In Game")]
     public Text txtScore;
 
     public Sprite[] listLifesSprites;
     public Image imgLifesDisplay;
+
+    private void Awake()
+    {
+        RefreshInfos();
+    }
 
     private void Start()
     {
@@ -52,12 +61,12 @@ public class GameController : MonoBehaviour
         if (isBGMActive)
         {
             this.soundController.SetActiveBGM(false);
-            btnSoundController.GetComponent<Image>().sprite = listSprite[1];
+            btnSoundController.GetComponent<Image>().sprite = listSpeakerSprites[1];
         }
         else
         {
             this.soundController.SetActiveBGM(true);
-            btnSoundController.GetComponent<Image>().sprite = listSprite[0];
+            btnSoundController.GetComponent<Image>().sprite = listSpeakerSprites[0];
         }
         isBGMActive = !isBGMActive;
     }
@@ -83,6 +92,11 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        if (this.points > this.highScore)
+        {
+            PlayerPrefs.SetInt(PrefsKeys.highScore, this.points);
+        }
+
         this.soundController.PlayGameOver();
 
         playerLifes = 3;
@@ -101,6 +115,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(enemy);
         }
+
+        this.RefreshInfos();
     }
 
     public void MakeAPoint(int point)
@@ -143,5 +159,11 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         MakeAPoint(7);
         Destroy(enemy);
+    }
+
+    private void RefreshInfos()
+    {
+        this.highScore = PlayerPrefs.GetInt(PrefsKeys.highScore);
+        txtHighScore.text = "REC: " + this.highScore.ToString();
     }
 }
