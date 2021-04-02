@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 public class EnemyPiranhaController : MonoBehaviour
 {
     private GameController gameController;
@@ -9,8 +8,8 @@ public class EnemyPiranhaController : MonoBehaviour
     private GameObject shipPlayer;
     public float moveSpeed = 0.1f;
 
-    private Vector3 leftDeathPoint = new Vector3(-10f, -2f, 0f);
-    private Vector3 rightDeathPoint = new Vector3(10f, -2f, 0f);
+    private Vector3 leftDeathPoint = new Vector3(-20f, -2f, 0f);
+    private Vector3 rightDeathPoint = new Vector3(20f, -2f, 0f);
 
     public bool isDying = false;
 
@@ -29,11 +28,11 @@ public class EnemyPiranhaController : MonoBehaviour
         {
             if (transform.position.x < 0)
             {
-                transform.position += (leftDeathPoint - transform.position) * 4f * Time.deltaTime;
+                transform.position += (leftDeathPoint - transform.position) * 2f * Time.deltaTime;
             }
             else
             {
-                transform.position += (rightDeathPoint - transform.position) * 4f * Time.deltaTime;
+                transform.position += (rightDeathPoint - transform.position) * 2f * Time.deltaTime;
             }
         }
         else
