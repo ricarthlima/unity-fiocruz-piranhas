@@ -35,6 +35,8 @@ public class GameController : MonoBehaviour
     [Header("UI Objects - In Game")]
     public Text txtScore;
 
+    public Text txtLevels;
+
     public Sprite[] listLifesSprites;
     public Image imgLifesDisplay;
 
@@ -75,12 +77,16 @@ public class GameController : MonoBehaviour
     {
         this.imgLifesDisplay.sprite = this.listLifesSprites[playerLifes];
         txtScore.text = points.ToString();
+        this.txtLevels.text = "Level: " + this.level.ToString();
+
         this.soundController.ActiveButtonClick();
         this.isGameStarted = true;
         canvaMainMenu.SetActive(false);
         canvaInGame.SetActive(true);
         backgroundController.setActivePiranhaSwimming(false);
         this.spawnController.StartSpawn();
+
+        this.soundController.PlayMotorSound();
 
         InvokeRepeating("NextLevel", 25f, 25f);
     }
@@ -116,6 +122,7 @@ public class GameController : MonoBehaviour
             Destroy(enemy);
         }
 
+        this.soundController.StopMotorSound();
         this.RefreshInfos();
     }
 
@@ -127,11 +134,6 @@ public class GameController : MonoBehaviour
     }
 
     public void TakeADamage()
-    {
-        Invoke("DelaySoundBite", 1.4f);
-    }
-
-    private void DelaySoundBite()
     {
         this.soundController.PlayBiteSound();
         playerLifes -= 1;
@@ -152,6 +154,8 @@ public class GameController : MonoBehaviour
         {
             StartCoroutine("FleePiranhas", enemy);
         }
+
+        this.txtLevels.text = "Level: " + this.level.ToString();
     }
 
     private IEnumerator FleePiranhas(GameObject enemy)
@@ -165,5 +169,18 @@ public class GameController : MonoBehaviour
     {
         this.highScore = PlayerPrefs.GetInt(PrefsKeys.highScore);
         txtHighScore.text = "REC: " + this.highScore.ToString();
+    }
+
+    public void TooglePauseGame()
+    {
+        this.soundController.ActiveButtonClick();
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
     }
 }

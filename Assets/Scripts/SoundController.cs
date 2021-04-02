@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
-    [Header("Sound Objects")]
     [SerializeField]
-    private GameObject soundBGM, soundClickButton, soundScored, soundBite, soundGameOver;
+    private GameObject soundBGM, soundClickButton, soundScored, soundBite, soundGameOver, soundMotor;
 
     private void Start()
     {
@@ -40,5 +39,15 @@ public class SoundController : MonoBehaviour
     public void PlayGameOver()
     {
         Instantiate(this.soundGameOver);
+    }
+
+    public void PlayMotorSound()
+    {
+        this.soundMotor.SetActive(true);
+    }
+
+    public void StopMotorSound()
+    {
+        this.soundMotor.SetActive(false);
     }
 }
