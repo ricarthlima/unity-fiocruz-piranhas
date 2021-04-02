@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DragonBones;
 
+/*
+ *  Autor do Script:            Ricarth Lima
+ *  Data Script:                01/04/2021
+ *  Versão do Script:           1.0
+ *  Finalidade do Script:       Controlar GameObjects que não fazem parte do jogo, apenas servem
+ *                              como elementos de background.
+ */
+
 public class BackgroundController : MonoBehaviour
 {
     private UnityArmatureComponent piranhaSwiming;

@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//1 ~ 5 -> 2 ~ 5
-//5 ~ 10 -> 1 ~ 3
-//10 ~ -> 0.5 ~ 1.5
+/*
+ *  Autor do Script:            Ricarth Lima
+ *  Data Script:                01/04/2021
+ *  Versão do Script:           1.0
+ *  Finalidade do Script:       Controla o "spawn" das piranhas quando o jogo está ativado.
+ */
+
 public class SpawnController : MonoBehaviour
 {
     [Header("Piranha Prefab")]

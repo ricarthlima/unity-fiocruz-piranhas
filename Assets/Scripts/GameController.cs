@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ *  Autor do Script:            Ricarth Lima
+ *  Data Script:                01/04/2021
+ *  Versão do Script:           1.0
+ *  Finalidade do Script:       Principal controlador do jogo. Controla as mecânicas do jogo, bem
+ *                              como preferências do usuário e elementos de UI.
+ *                              ESSE SCRIPT DEVE SER DESSOBRECARREGADO EM BREVE!
+ */
+
 public class GameController : MonoBehaviour
 {
     public bool isGameStarted;

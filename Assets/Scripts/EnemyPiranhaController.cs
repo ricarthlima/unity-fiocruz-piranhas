@@ -1,6 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
+/*
+ *  Autor do Script:            Ricarth Lima
+ *  Data Script:                01/04/2021
+ *  Versão do Script:           1.0
+ *  Finalidade do Script:       Controla o comportamento das piranhas comuns.
+ */
+
 public class EnemyPiranhaController : MonoBehaviour
 {
     private GameController gameController;
