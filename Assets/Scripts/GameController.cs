@@ -35,6 +35,8 @@ public class GameController : MonoBehaviour
     [Header("UI Objects - In Game")]
     public Text txtScore;
 
+    public Text txtLevels;
+
     public Sprite[] listLifesSprites;
     public Image imgLifesDisplay;
 
@@ -75,6 +77,8 @@ public class GameController : MonoBehaviour
     {
         this.imgLifesDisplay.sprite = this.listLifesSprites[playerLifes];
         txtScore.text = points.ToString();
+        this.txtLevels.text = "Level: " + this.level.ToString();
+
         this.soundController.ActiveButtonClick();
         this.isGameStarted = true;
         canvaMainMenu.SetActive(false);
@@ -150,6 +154,8 @@ public class GameController : MonoBehaviour
         {
             StartCoroutine("FleePiranhas", enemy);
         }
+
+        this.txtLevels.text = "Level: " + this.level.ToString();
     }
 
     private IEnumerator FleePiranhas(GameObject enemy)
