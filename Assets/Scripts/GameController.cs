@@ -128,11 +128,6 @@ public class GameController : MonoBehaviour
 
     public void TakeADamage()
     {
-        Invoke("DelaySoundBite", 1.4f);
-    }
-
-    private void DelaySoundBite()
-    {
         this.soundController.PlayBiteSound();
         playerLifes -= 1;
         this.imgLifesDisplay.sprite = this.listLifesSprites[playerLifes];
@@ -169,6 +164,7 @@ public class GameController : MonoBehaviour
 
     public void TooglePauseGame()
     {
+        this.soundController.ActiveButtonClick();
         if (Time.timeScale == 1)
         {
             Time.timeScale = 0;
