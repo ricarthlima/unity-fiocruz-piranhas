@@ -82,6 +82,8 @@ public class GameController : MonoBehaviour
         backgroundController.setActivePiranhaSwimming(false);
         this.spawnController.StartSpawn();
 
+        this.soundController.PlayMotorSound();
+
         InvokeRepeating("NextLevel", 25f, 25f);
     }
 
@@ -116,6 +118,7 @@ public class GameController : MonoBehaviour
             Destroy(enemy);
         }
 
+        this.soundController.StopMotorSound();
         this.RefreshInfos();
     }
 

@@ -15,11 +15,11 @@ MonoBehaviour:
   Path: Assets/Sounds/FMOD/fmod/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637528607033756458
+  lastModified: 637529144700528688
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 916
+    Value: 954
   Exists: 1
 --- !u!114 &-4518001594219692837
 MonoBehaviour:
@@ -36,7 +36,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMOD/fmod/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637528607033676406
+  lastModified: 637529144700468727
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -84,12 +84,13 @@ MonoBehaviour:
   - {fileID: -2338926820325190506}
   - {fileID: 373735232745574923}
   - {fileID: 5585749187932917271}
+  - {fileID: 2173758418658850279}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4518001594219692837}
   StringsBanks:
   - {fileID: -6175694624404722383}
-  stringsBankWriteTime: 637528607033756458
+  stringsBankWriteTime: 637529144700528688
   cacheVersion: 6
 --- !u!114 &373735232745574923
 MonoBehaviour:
@@ -105,6 +106,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/Bite
   guid: 54c110b01e10c24c986cbd0e6788d843
+  Banks:
+  - {fileID: -4518001594219692837}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &2173758418658850279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BoatMotor
+  m_EditorClassIdentifier: 
+  Path: event:/BoatMotor
+  guid: a6b25055d442fb4d9fa46eb6fe0be3ea
   Banks:
   - {fileID: -4518001594219692837}
   IsStream: 0
