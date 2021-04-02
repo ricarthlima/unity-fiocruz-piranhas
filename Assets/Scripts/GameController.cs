@@ -166,4 +166,16 @@ public class GameController : MonoBehaviour
         this.highScore = PlayerPrefs.GetInt(PrefsKeys.highScore);
         txtHighScore.text = "REC: " + this.highScore.ToString();
     }
+
+    public void TooglePauseGame()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+    }
 }
