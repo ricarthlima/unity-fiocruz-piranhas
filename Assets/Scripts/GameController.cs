@@ -15,9 +15,10 @@ public class GameController : MonoBehaviour
     private BackgroundController backgroundController;
     private SoundController soundController;
     private SpawnController spawnController;
+    private FirebaseController firebaseController;
 
     [SerializeField]
-    private GameObject canvaMainMenu, canvaInGame;
+    private GameObject canvaMainMenu, canvaInGame, canvaNewRecord;
 
     [Header("In-game Controller")]
     public int playerLifes = 3;     // Quantidade de vidas disponíveis
@@ -40,6 +41,9 @@ public class GameController : MonoBehaviour
     public Sprite[] listLifesSprites;
     public Image imgLifesDisplay;
 
+    [Header("UI Objects - New Record")]
+    public InputField inputUsername;
+
     private void Awake()
     {
         RefreshInfos();
@@ -50,6 +54,7 @@ public class GameController : MonoBehaviour
         this.backgroundController = gameObject.GetComponent<BackgroundController>();
         this.soundController = gameObject.GetComponent<SoundController>();
         this.spawnController = gameObject.GetComponent<SpawnController>();
+        this.firebaseController = gameObject.GetComponent<FirebaseController>();
     }
 
     // Update is called once per frame
@@ -88,7 +93,7 @@ public class GameController : MonoBehaviour
 
         this.soundController.PlayMotorSound();
 
-        InvokeRepeating("NextLevel", 25f, 25f);
+        StartCoroutine("NextLevel");
     }
 
     public void ShowRanking()
@@ -98,22 +103,26 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        StopCoroutine("NextLevel");
+        this.isGameStarted = false;
+        canvaInGame.SetActive(false);
+
         if (this.points > this.highScore)
         {
             PlayerPrefs.SetInt(PrefsKeys.highScore, this.points);
+            canvaNewRecord.SetActive(true);
+        }
+        else
+        {
+            canvaMainMenu.SetActive(true);
         }
 
         this.soundController.PlayGameOver();
-
-        playerLifes = 3;
         points = 0;
+        playerLifes = 3;
         level = 0;
 
-        this.isGameStarted = false;
-        canvaMainMenu.SetActive(true);
-        canvaInGame.SetActive(false);
         this.spawnController.StopSpawn();
-
         backgroundController.setActivePiranhaSwimming(true);
 
         GameObject[] arrayEnemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -124,6 +133,18 @@ public class GameController : MonoBehaviour
 
         this.soundController.StopMotorSound();
         this.RefreshInfos();
+    }
+
+    public void ButtonSendNewRecord()
+    {
+        string text = this.inputUsername.text;
+        if (text.Length >= 3 && text.Length <= 20)
+        {
+            int hs = PlayerPrefs.GetInt(PrefsKeys.highScore);
+            this.firebaseController.RecordData(text, hs);
+            this.canvaNewRecord.SetActive(false);
+            this.canvaMainMenu.SetActive(true);
+        }
     }
 
     public void MakeAPoint(int point)
@@ -145,24 +166,34 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void NextLevel()
+    private IEnumerator NextLevel()
     {
+        yield return new WaitForSeconds(25f);
+
+        StartCoroutine("FleePiranhas");
+
         this.level += 1;
 
-        GameObject[] arrayEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in arrayEnemies)
-        {
-            StartCoroutine("FleePiranhas", enemy);
-        }
-
         this.txtLevels.text = "Level: " + this.level.ToString();
+
+        StartCoroutine("NextLevel");
     }
 
-    private IEnumerator FleePiranhas(GameObject enemy)
+    private IEnumerator FleePiranhas()
     {
-        yield return new WaitForSeconds(0.15f);
-        MakeAPoint(7);
-        Destroy(enemy);
+        yield return new WaitForSeconds(0.10f);
+        GameObject[] arrayEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (arrayEnemies.Length > 0)
+        {
+            MakeAPoint(7);
+            Destroy(arrayEnemies[0]);
+            StartCoroutine("FleePiranhas");
+        }
+        else
+        {
+            StopCoroutine("FleePiranhas");
+        }
     }
 
     private void RefreshInfos()
