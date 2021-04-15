@@ -44,6 +44,12 @@ public class GameController : MonoBehaviour
     [Header("UI Objects - New Record")]
     public InputField inputUsername;
 
+    [Header("UI Objects - Ranking")]
+    public GameObject canvaRanking;
+
+    public Text txtRanking;
+    public Text txtPoints;
+
     private void Awake()
     {
         RefreshInfos();
@@ -99,6 +105,7 @@ public class GameController : MonoBehaviour
     public void ShowRanking()
     {
         this.soundController.PlayBiteSound();
+        this.ShowRankingScreen();
     }
 
     public void GameOver()
@@ -213,5 +220,21 @@ public class GameController : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+    }
+
+    public void BackToMainScreenFromRankingScreen()
+    {
+        this.soundController.ActiveButtonClick();
+        this.canvaRanking.SetActive(false);
+        this.canvaMainMenu.SetActive(true);
+    }
+
+    public void ShowRankingScreen()
+    {
+        this.canvaRanking.SetActive(true);
+        this.canvaMainMenu.SetActive(false);
+        this.canvaInGame.SetActive(false);
+        this.canvaNewRecord.SetActive(false);
+        this.firebaseController.UpdateRankingScreen();
     }
 }
