@@ -148,7 +148,7 @@ public class GameController : MonoBehaviour
         if (text.Length >= 3 && text.Length <= 20)
         {
             int hs = PlayerPrefs.GetInt(PrefsKeys.highScore);
-            this.firebaseController.RecordData(text, hs);
+            firebaseController.RecordData(text, hs);
             this.canvaNewRecord.SetActive(false);
             this.canvaMainMenu.SetActive(true);
         }

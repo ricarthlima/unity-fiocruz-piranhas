@@ -10,6 +10,8 @@ using UnityEngine.Networking;
 using System.Collections;
 using MiniJSON;
 using Newtonsoft.Json.Linq;
+using FMOD;
+using System.Runtime.Serialization.Json;
 
 public class FirebaseController : MonoBehaviour
 {
@@ -46,6 +48,11 @@ public class FirebaseController : MonoBehaviour
         return value;
     }
 
+    public void SetUuid(string uuid)
+    {
+        PlayerPrefs.SetString(PrefsKeys.uuid, uuid);
+    }
+
     public void UpdateRankingScreen()
     {
         StartCoroutine(UpdateData());
@@ -64,7 +71,6 @@ public class FirebaseController : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string json = request.downloadHandler.text;
-            Debug.Log(json);
 
             Dictionary<string, object> dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 
@@ -88,6 +94,43 @@ public class FirebaseController : MonoBehaviour
             isMostra = true;
         }
     }
+
+    public void RecordData(string text, int hs)
+    {
+        StartCoroutine(InternalRecordData(text, hs));
+    }
+
+    private IEnumerator InternalRecordData(string text, int hs)
+    {
+        print(GetUuid());
+        if (GetUuid() != "NONE")
+        {
+            UnityWebRequest deleteRequest = UnityWebRequest.Delete("https://piranha-attack-api.herokuapp.com/score_registers/" + GetUuid());
+            deleteRequest.SetRequestHeader("Authorization", Secrets.SECRET_TOKEN_API);
+            yield return deleteRequest.SendWebRequest();
+        }
+        DTOPostModel model = new DTOPostModel(text, hs);
+        //UnityWebRequest request = UnityWebRequest.Post("https://piranha-attack-api.herokuapp.com/score_registers", a);
+        UnityWebRequest request = new UnityWebRequest("https://piranha-attack-api.herokuapp.com/score_registers");
+        request.method = "POST";
+        request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(model)));
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Authorization", Secrets.SECRET_TOKEN_API);
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            DTOScoreModel model2 = JsonConvert.DeserializeObject<DTOScoreModel>(request.downloadHandler.text);
+            print(model2.getUUID());
+            SetUuid(model2.getUUID());
+        }
+        else
+        {
+            print(request.error);
+        }
+    }
 }
 
 [Serializable]
@@ -96,4 +139,35 @@ public class DTOScoreModel
     public Dictionary<string, object> _id;
     public int score;
     public string username;
+
+    public string getUUID()
+    {
+        return _id["$oid"].ToString();
+    }
+}
+
+[Serializable]
+public class DTOPostModel
+{
+    public int score;
+    public string username;
+
+    public DTOPostModel(string username, int score)
+    {
+        this.username = username;
+        this.score = score;
+    }
+
+    public Dictionary<string, string> ToPayload()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        dict["username"] = this.username;
+        dict["score"] = this.score.ToString();
+        return dict;
+    }
+
+    public string ToJson()
+    {
+        return "{'username': '" + this.username + "','score': " + this.score.ToString() + "}";
+    }
 }
