@@ -1,7 +1,5 @@
 using UnityEngine;
-using Firebase;
 using System;
-using Firebase.Database;
 
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -13,7 +11,7 @@ using Newtonsoft.Json.Linq;
 using FMOD;
 using System.Runtime.Serialization.Json;
 
-public class FirebaseController : MonoBehaviour
+public class RestController : MonoBehaviour
 {
     public Text txtRanking;
     public Text txtPoints;

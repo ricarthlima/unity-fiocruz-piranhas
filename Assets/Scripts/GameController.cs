@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     private BackgroundController backgroundController;
     private SoundController soundController;
     private SpawnController spawnController;
-    private FirebaseController firebaseController;
+    private RestController firebaseController;
 
     [SerializeField]
     private GameObject canvaMainMenu, canvaInGame, canvaNewRecord;
@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         this.backgroundController = gameObject.GetComponent<BackgroundController>();
         this.soundController = gameObject.GetComponent<SoundController>();
         this.spawnController = gameObject.GetComponent<SpawnController>();
-        this.firebaseController = gameObject.GetComponent<FirebaseController>();
+        this.firebaseController = gameObject.GetComponent<RestController>();
     }
 
     // Update is called once per frame
